@@ -28,7 +28,7 @@ import java.util.UUID;
 public class FichierService {
 
     // Dossier de base pour les uploads (depuis application.properties)
-    @Value("${app.upload.dir}")
+    @Value("${app.upload.dir:uploads}")
     private String dossierUpload;
     // Ex: "uploads" → les fichiers seront dans ./uploads/audios/ et ./uploads/pdfs/
 
