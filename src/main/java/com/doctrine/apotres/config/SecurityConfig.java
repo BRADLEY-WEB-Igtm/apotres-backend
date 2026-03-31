@@ -52,8 +52,9 @@ public class SecurityConfig {
     // Service qui charge les utilisateurs depuis la BD
 
     // Origines autorisées à appeler l'API (depuis application.properties)
-    @Value("${app.cors.allowed-origins}")
+    @Value("${app.cors.allowed-origins:https://doctrinedesapotres.com,https://www.doctrinedesapotres.com,http://localhost:5500,http://localhost:5501}")
     private String allowedOrigins;
+    // Valeur par défaut = domaines autorisés si variable non définie
 
     /**
      * Configuration principale de la sécurité HTTP
