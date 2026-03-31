@@ -30,11 +30,11 @@ public class JwtUtil {
 
     // Clé secrète lue depuis application.properties
     // @Value = injecte la valeur de la propriété dans ce champ
-    @Value("${app.jwt.secret}")
+    @Value("${app.jwt.secret:DoctrineDesApotres@2026#SecureKey!JWT$Token*Spring&Boot%Admin}")
     private String jwtSecret;
 
     // Durée de validité du token (en ms) depuis application.properties
-    @Value("${app.jwt.expiration}")
+    @Value("${app.jwt.expiration:86400000}")
     private long jwtExpiration;
 
     /**
