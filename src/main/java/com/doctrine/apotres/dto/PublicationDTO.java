@@ -97,6 +97,9 @@ public class PublicationDTO {
         private String jourZoom;
         private String dateSession;
         private String tags;
+        private String resume;
+        private String predicateur;
+        private String imageUne;
         private Boolean commentairesActifs;
         private LocalDateTime dateCreation;
         private LocalDateTime dateModification;
