@@ -69,6 +69,8 @@ public class PublicationDTO {
 
         // Tags séparés par virgules
         private String tags;
+        private String resume;       // Résumé court
+        private String predicateur; // Prédicateur/Orateur
 
         // Autoriser les commentaires ?
         private Boolean commentairesActifs;
@@ -91,15 +93,17 @@ public class PublicationDTO {
         private String sousCategorie;
         private String auteur;
         private StatutPublication statut;
-        private String cheminAudio;   // URL pour écouter l'audio
-        private String cheminPdf;     // URL pour télécharger le PDF
+        private String cheminAudio;    // URL pour écouter l'audio (partie 1)
+        private String cheminAudio2;   // URL pour écouter l'audio (partie 2)
+        private String cheminAudio3;   // URL pour écouter l'audio (partie 3)
+        private String cheminPdf;      // URL pour télécharger le PDF
+        private String imageUne;       // Image à la une
         private String lienVideo;
         private String jourZoom;
         private String dateSession;
         private String tags;
-        private String resume;
-        private String predicateur;
-        private String imageUne;
+        private String resume;         // Résumé/extrait court
+        private String predicateur;    // Prédicateur/Orateur
         private Boolean commentairesActifs;
         private LocalDateTime dateCreation;
         private LocalDateTime dateModification;
