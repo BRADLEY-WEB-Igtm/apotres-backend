@@ -116,6 +116,26 @@ public class Publication {
     @Column(name = "chemin_audio", length = 500)
     private String cheminAudio;
 
+    // CHEMIN DU 2ème FICHIER AUDIO (partie 2)
+    @Column(name = "chemin_audio2", length = 500)
+    private String cheminAudio2;
+
+    // CHEMIN DU 3ème FICHIER AUDIO (partie 3)
+    @Column(name = "chemin_audio3", length = 500)
+    private String cheminAudio3;
+
+    // RÉSUMÉ / EXTRAIT COURT
+    @Column(name = "resume", length = 1000)
+    private String resume;
+
+    // PRÉDICATEUR / ORATEUR
+    @Column(name = "predicateur", length = 200)
+    private String predicateur;
+
+    // IMAGE À LA UNE (chemin du fichier)
+    @Column(name = "image_une", length = 500)
+    private String imageUne;
+
     // ============================================================
     // CHEMIN DU FICHIER PDF (pour les livres)
     // Ex: "uploads/pdfs/marque-de-la-bete.pdf"
