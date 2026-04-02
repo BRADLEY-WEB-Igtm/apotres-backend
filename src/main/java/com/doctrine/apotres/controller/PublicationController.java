@@ -119,15 +119,16 @@ public class PublicationController {
         @RequestPart("publication") @Valid PublicationDTO.Request request,
         // "publication" = nom de la partie contenant le JSON dans le multipart
 
-        @RequestPart(value = "audio", required = false) MultipartFile fichierAudio,
-        // "audio" = partie optionnelle contenant le fichier MP3
-
-        @RequestPart(value = "pdf", required = false) MultipartFile fichierPdf
+        @RequestPart(value = "audio",  required = false) MultipartFile fichierAudio,
+        @RequestPart(value = "audio2", required = false) MultipartFile fichierAudio2,
+        @RequestPart(value = "audio3", required = false) MultipartFile fichierAudio3,
+        @RequestPart(value = "image",  required = false) MultipartFile fichierImage,
+        @RequestPart(value = "pdf",    required = false) MultipartFile fichierPdf
         // "pdf" = partie optionnelle contenant le fichier PDF
     ) {
         try {
             PublicationDTO.Response created =
-                publicationService.creer(request, fichierAudio, fichierPdf);
+                publicationService.creer(request, fichierAudio, fichierAudio2, fichierAudio3, fichierImage, fichierPdf);
 
             // HTTP 201 Created (standard pour les créations)
             return ResponseEntity.status(201).body(created);
@@ -153,8 +154,11 @@ public class PublicationController {
     public ResponseEntity<?> modifier(
         @PathVariable Long id,
         @RequestPart("publication") @Valid PublicationDTO.Request request,
-        @RequestPart(value = "audio", required = false) MultipartFile fichierAudio,
-        @RequestPart(value = "pdf", required = false) MultipartFile fichierPdf
+        @RequestPart(value = "audio",  required = false) MultipartFile fichierAudio,
+        @RequestPart(value = "audio2", required = false) MultipartFile fichierAudio2,
+        @RequestPart(value = "audio3", required = false) MultipartFile fichierAudio3,
+        @RequestPart(value = "image",  required = false) MultipartFile fichierImage,
+        @RequestPart(value = "pdf",    required = false) MultipartFile fichierPdf
     ) {
         try {
             PublicationDTO.Response updated =
