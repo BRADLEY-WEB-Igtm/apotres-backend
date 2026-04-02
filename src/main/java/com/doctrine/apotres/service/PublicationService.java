@@ -57,6 +57,9 @@ public class PublicationService {
     public PublicationDTO.Response creer(
         PublicationDTO.Request request,
         MultipartFile fichierAudio,
+        MultipartFile fichierAudio2,
+        MultipartFile fichierAudio3,
+        MultipartFile fichierImage,
         MultipartFile fichierPdf
     ) throws IOException {
 
@@ -68,6 +71,8 @@ public class PublicationService {
         publication.setCategorie(request.getCategorie());
         publication.setSousCategorie(request.getSousCategorie());
         publication.setTags(request.getTags());
+        if (request.getResume() != null) publication.setResume(request.getResume());
+        if (request.getPredicateur() != null) publication.setPredicateur(request.getPredicateur());
         publication.setLienVideo(request.getLienVideo());
         publication.setJourZoom(request.getJourZoom());
         publication.setDateSession(request.getDateSession());
@@ -133,6 +138,8 @@ public class PublicationService {
         publication.setCategorie(request.getCategorie());
         publication.setSousCategorie(request.getSousCategorie());
         publication.setTags(request.getTags());
+        if (request.getResume() != null) publication.setResume(request.getResume());
+        if (request.getPredicateur() != null) publication.setPredicateur(request.getPredicateur());
         publication.setLienVideo(request.getLienVideo());
         publication.setJourZoom(request.getJourZoom());
         publication.setDateSession(request.getDateSession());
@@ -353,6 +360,11 @@ public class PublicationService {
         dto.setJourZoom(pub.getJourZoom());
         dto.setDateSession(pub.getDateSession());
         dto.setTags(pub.getTags());
+        dto.setCheminAudio2(pub.getCheminAudio2());
+        dto.setCheminAudio3(pub.getCheminAudio3());
+        dto.setResume(pub.getResume());
+        dto.setPredicateur(pub.getPredicateur());
+        dto.setImageUne(pub.getImageUne());
         dto.setCommentairesActifs(pub.getCommentairesActifs());
         dto.setDateCreation(pub.getDateCreation());
         dto.setDateModification(pub.getDateModification());
