@@ -43,6 +43,9 @@ public interface CommentaireRepository extends JpaRepository<Commentaire, Long> 
      */
     long countByStatut(StatutCommentaire statut);
 
+    // Compte les commentaires approuvés d'une publication spécifique
+    long countByPublicationIdAndStatut(Long publicationId, StatutCommentaire statut);
+
     /**
      * Trouve les commentaires par source
      * Ex: source = "zoom" → tous les commentaires des pages Zoom
