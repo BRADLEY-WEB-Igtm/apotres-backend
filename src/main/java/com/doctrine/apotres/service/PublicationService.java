@@ -96,16 +96,23 @@ public class PublicationService {
             publication.setDatePublication(LocalDateTime.now());
         }
 
-        // ---- Sauvegarde le fichier audio si présent ----
+        // ---- Sauvegarde les fichiers audio (parties 1, 2, 3) ----
         if (fichierAudio != null && !fichierAudio.isEmpty()) {
-            String cheminAudio = fichierService.sauvegarderAudio(fichierAudio);
-            publication.setCheminAudio(cheminAudio);
+            publication.setCheminAudio(fichierService.sauvegarderAudio(fichierAudio));
         }
-
+        if (fichierAudio2 != null && !fichierAudio2.isEmpty()) {
+            publication.setCheminAudio2(fichierService.sauvegarderAudio(fichierAudio2));
+        }
+        if (fichierAudio3 != null && !fichierAudio3.isEmpty()) {
+            publication.setCheminAudio3(fichierService.sauvegarderAudio(fichierAudio3));
+        }
+        // ---- Sauvegarde l'image à la une si présente ----
+        if (fichierImage != null && !fichierImage.isEmpty()) {
+            publication.setImageUne(fichierService.sauvegarderAudio(fichierImage));
+        }
         // ---- Sauvegarde le fichier PDF si présent ----
         if (fichierPdf != null && !fichierPdf.isEmpty()) {
-            String cheminPdf = fichierService.sauvegarderPdf(fichierPdf);
-            publication.setCheminPdf(cheminPdf);
+            publication.setCheminPdf(fichierService.sauvegarderPdf(fichierPdf));
         }
 
         // ---- Sauvegarde en base de données ----
@@ -370,9 +377,12 @@ public class PublicationService {
         dto.setDateModification(pub.getDateModification());
         dto.setDatePublication(pub.getDatePublication());
 
-        // Compte les commentaires approuvés de cette publication
+        // Compte les commentaires approuvés de CETTE publication spécifiquement
         long nbCommentaires = commentaireRepository
-            .countByStatut(com.doctrine.apotres.entity.Commentaire.StatutCommentaire.APPROUVE);
+            .countByPublicationIdAndStatut(
+                pub.getId(),
+                com.doctrine.apotres.entity.Commentaire.StatutCommentaire.APPROUVE
+            );
         dto.setNombreCommentaires((int) nbCommentaires);
 
         return dto;
