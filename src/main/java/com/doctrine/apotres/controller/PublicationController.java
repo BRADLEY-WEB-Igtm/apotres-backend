@@ -13,13 +13,7 @@ import com.doctrine.apotres.service.PublicationService;
 
 import java.util.Map;
 
-/**
- * CONTROLLER PUBLICATION — VERSION CLOUDINARY
- *
- * Les fichiers sont uploadés directement sur Cloudinary par le navigateur.
- * Le backend reçoit seulement des URLs texte dans un JSON simple.
- * Plus de multipart/form-data pour les fichiers — plus de timeout Railway.
- */
+
 @RestController
 @CrossOrigin
 public class PublicationController {
@@ -27,7 +21,6 @@ public class PublicationController {
     @Autowired
     private PublicationService publicationService;
 
-    // ── ENDPOINTS PUBLICS ──────────────────────────────────────────
 
     @GetMapping("/api/publications")
     public ResponseEntity<Page<PublicationDTO.Response>> listerPubliees(
@@ -52,28 +45,11 @@ public class PublicationController {
         }
     }
 
-    // ── ENDPOINTS ADMIN ────────────────────────────────────────────
 
-    /**
-     * POST /api/admin/publications
-     *
-     * Reçoit un JSON simple avec les URLs Cloudinary déjà prêtes.
-     * Exemple de body :
-     * {
-     *   "type": "ZOOM",
-     *   "titre": "Session du 06/04/2026",
-     *   "jourZoom": "JEUDI",
-     *   "dateSession": "2026-04-06",
-     *   "cheminAudio":  "https://res.cloudinary.com/dqmy8sqmg/video/upload/.../p1.mp3",
-     *   "cheminAudio2": "https://res.cloudinary.com/dqmy8sqmg/video/upload/.../p2.mp3",
-     *   "statut": "PUBLIE"
-     * }
-     */
     @PostMapping("/api/admin/publications")
     public ResponseEntity<?> creer(
         @RequestBody @Valid PublicationDTO.Request request
-        /* @RequestBody = lit le JSON du body directement */
-        /* Plus de @RequestPart — plus de multipart */
+
     ) {
         try {
             PublicationDTO.Response created = publicationService.creer(request);
