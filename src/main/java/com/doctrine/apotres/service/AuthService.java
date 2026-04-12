@@ -18,13 +18,6 @@ import java.time.LocalDateTime;
 /**
  * ============================================================
  * SERVICE AUTHENTIFICATION
- *
- * Gère la connexion des administrateurs au dashboard :
- * 1. Vérifie le username et mot de passe
- * 2. Génère un token JWT en cas de succès
- * 3. Retourne le token + infos admin au frontend
- *
- * @Service = composant de service Spring (logique métier)
  * ============================================================
  */
 @Service
@@ -44,47 +37,38 @@ public class AuthService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-    // BCrypt — pour hasher les mots de passe
+   
 
     /**
      * Connecte un administrateur
-     * Appelé depuis AuthController → POST /api/auth/login
      *
-     * @param request Les identifiants (username + mot de passe)
-     * @return La réponse avec le token JWT et les infos admin
-     * @throws BadCredentialsException si les identifiants sont incorrects
      */
     public AuthDTO.LoginResponse connecter(AuthDTO.LoginRequest request) {
 
         // ---- Étape 1 : Authentifier via Spring Security ----
-        // UsernamePasswordAuthenticationToken = encapsule username + mot de passe
+       
         Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
                 request.getUsername(),
                 request.getMotDePasse()
-                // Spring Security compare automatiquement avec le hash BCrypt en BD
+               
             )
         );
-        // Si les identifiants sont incorrects → exception BadCredentialsException
-        // Spring Security gère ça automatiquement
+        // Si les identifiants sont incorrects → 
 
-        // ---- Étape 2 : Récupérer l'utilisateur depuis la BD ----
+      
         Utilisateur utilisateur = utilisateurRepository
             .findByUsername(request.getUsername())
             .orElseThrow(() ->
                 new BadCredentialsException("Utilisateur non trouvé")
             );
 
-        // ---- Étape 3 : Mettre à jour la date de dernière connexion ----
+  -
         utilisateur.setDerniereConnexion(LocalDateTime.now());
         utilisateurRepository.save(utilisateur);
-        // save() = UPDATE si l'entité a un ID existant
-
-        // ---- Étape 4 : Générer le token JWT ----
+      
         String token = jwtUtil.genererToken(utilisateur.getUsername());
-        // Le token contient le username et expire dans 24h
 
-        // ---- Étape 5 : Retourner la réponse ----
         return new AuthDTO.LoginResponse(
             token,
             "Bearer",
@@ -98,13 +82,6 @@ public class AuthService {
 
     /**
      * Crée le premier compte Super Admin
-     * Appelé au démarrage de l'application si aucun admin n'existe
-     * (voir DataInitializer)
-     *
-     * @param username Nom d'utilisateur
-     * @param email Email
-     * @param motDePasse Mot de passe en clair (sera hashé)
-     * @param nomComplet Nom complet
      */
     public Utilisateur creerAdmin(
         String username,
@@ -116,8 +93,7 @@ public class AuthService {
         admin.setUsername(username);
         admin.setEmail(email);
 
-        // Hash le mot de passe avec BCrypt avant de le stocker
-        // JAMAIS stocker un mot de passe en clair !
+        
         admin.setMotDePasse(passwordEncoder.encode(motDePasse));
 
         admin.setNomComplet(nomComplet);
