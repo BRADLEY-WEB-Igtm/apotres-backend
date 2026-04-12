@@ -16,11 +16,7 @@ import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 
 /**
- * SERVICE PUBLICATION — VERSION CLOUDINARY
- *
- * Simplifié : plus de gestion de fichiers ici.
- * Les URLs Cloudinary arrivent directement dans le Request.
- * On sauvegarde juste les URLs en base de données.
+ * SERVICE PUBLICATION 
  */
 @Service
 public class PublicationService {
