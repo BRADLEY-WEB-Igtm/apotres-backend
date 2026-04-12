@@ -21,22 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-/**
- * ============================================================
- * CONTROLLER UTILISATEUR
- *
- * Gère les comptes administrateurs :
- * - Voir / modifier son propre profil
- * - Changer son mot de passe
- * - SUPER_ADMIN : créer / désactiver d'autres admins
- *
- * Réponse à la question sur les multi-admins :
- * Seul le SUPER_ADMIN peut créer de nouveaux comptes admin.
- * Il crée le compte via le dashboard, définit un mot de passe
- * temporaire, et le nouvel admin le change dès sa première
- * connexion via la page Sécurité.
- * ============================================================
- */
+
 @RestController
 @RequestMapping("/api/admin/utilisateurs")
 @CrossOrigin
@@ -51,14 +36,7 @@ public class UtilisateurController {
     @Autowired
     private AuthService authService;
 
-    // ============================================================
-    // PROFIL DE L'ADMIN CONNECTÉ
-    // ============================================================
-
-    /**
-     * Récupère les infos du profil de l'admin connecté
-     * GET /api/admin/utilisateurs/profil
-     */
+   
     @GetMapping("/profil")
     public ResponseEntity<?> getProfil() {
         String username = SecurityContextHolder
@@ -80,10 +58,7 @@ public class UtilisateurController {
         return ResponseEntity.ok(profil);
     }
 
-    /**
-     * Met à jour le profil de l'admin connecté
-     * PUT /api/admin/utilisateurs/profil
-     */
+  
     @PutMapping("/profil")
     public ResponseEntity<?> mettreAJourProfil(
         @RequestBody MettreAJourProfilRequest request
@@ -169,15 +144,7 @@ public class UtilisateurController {
         ));
     }
 
-    // ============================================================
-    // GESTION DES AUTRES ADMINS — SUPER_ADMIN SEULEMENT
-    // ============================================================
-
-    /**
-     * Liste tous les administrateurs
-     * GET /api/admin/utilisateurs
-     * Accès : SUPER_ADMIN uniquement
-     */
+   
     @GetMapping
     @PreAuthorize("hasRole('SUPER_ADMIN')")
     // @PreAuthorize = vérifie le rôle AVANT d'exécuter la méthode
@@ -202,17 +169,7 @@ public class UtilisateurController {
         return ResponseEntity.ok(admins);
     }
 
-    /**
-     * Crée un nouvel administrateur
-     * POST /api/admin/utilisateurs/creer
-     * Accès : SUPER_ADMIN uniquement
-     *
-     * Fonctionnement multi-admins :
-     * 1. Le SUPER_ADMIN va dans le dashboard → Utilisateurs → Créer
-     * 2. Il remplit nom, email, username, mot de passe temporaire, rôle
-     * 3. Le nouvel admin reçoit ses identifiants
-     * 4. Il se connecte et change son mot de passe via Sécurité
-     */
+    
     @PostMapping("/creer")
     @PreAuthorize("hasRole('SUPER_ADMIN')")
     public ResponseEntity<?> creerAdmin(
@@ -260,11 +217,7 @@ public class UtilisateurController {
         ));
     }
 
-    /**
-     * Active ou désactive un compte admin
-     * PUT /api/admin/utilisateurs/{id}/actif
-     * Accès : SUPER_ADMIN uniquement
-     */
+ 
     @PutMapping("/{id}/actif")
     @PreAuthorize("hasRole('SUPER_ADMIN')")
     public ResponseEntity<?> toggleActif(@PathVariable Long id) {
@@ -326,7 +279,7 @@ public class UtilisateurController {
         @NotBlank(message = "Le mot de passe est obligatoire")
         @Size(min = 8, message = "Minimum 8 caractères")
         private String motDePasse;
-        // Mot de passe temporaire — l'admin le changera à la première connexion
+    
 
         private String role;
         // "SUPER_ADMIN", "ADMIN" ou "EDITEUR" — défaut : "ADMIN"
