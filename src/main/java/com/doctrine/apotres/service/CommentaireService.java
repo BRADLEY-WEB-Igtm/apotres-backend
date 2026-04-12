@@ -20,10 +20,6 @@ import java.time.LocalDateTime;
  * ============================================================
  * SERVICE COMMENTAIRE — logique métier
  *
- * Gère :
- * - Soumission d'un commentaire par un visiteur
- * - Modération (approuver / rejeter) par l'admin
- * - Listage pour le dashboard et pour le site client
  * ============================================================
  */
 @Service
@@ -37,13 +33,7 @@ public class CommentaireService {
 
     /**
      * Soumet un nouveau commentaire depuis le site client
-     * POST /api/commentaires ou POST /api/commentaires/{source}
-     *
-     * Correspond aux fetch() dans dimes.js, zoom.js, radio.js, etc.
-     *
-     * @param request Les données du formulaire de commentaire
-     * @param source La page source ("zoom", "emissions-radios", etc.)
-     * @param httpRequest La requête HTTP (pour récupérer l'IP du visiteur)
+     
      */
     public CommentaireDTO.Response soumettre(
         CommentaireDTO.Request request,
@@ -64,7 +54,7 @@ public class CommentaireService {
             Publication publication = publicationRepository
                 .findById(request.getPublicationId())
                 .orElse(null);
-            // orElse(null) = si non trouvée, on laisse null (pas d'exception)
+
             commentaire.setPublication(publication);
         }
 
@@ -77,7 +67,7 @@ public class CommentaireService {
 
     /**
      * Approuve un commentaire — le rend visible sur le site
-     * PUT /api/admin/commentaires/{id}/approuver
+     
      */
     public CommentaireDTO.Response approuver(Long id) {
         Commentaire commentaire = trouverParId(id);
@@ -93,8 +83,7 @@ public class CommentaireService {
     }
 
     /**
-     * Rejette un commentaire — non visible sur le site
-     * PUT /api/admin/commentaires/{id}/rejeter
+     * Rejette un commentaire —
      */
     public CommentaireDTO.Response rejeter(Long id) {
         Commentaire commentaire = trouverParId(id);
@@ -109,7 +98,6 @@ public class CommentaireService {
 
     /**
      * Supprime définitivement un commentaire
-     * DELETE /api/admin/commentaires/{id}
      */
     public void supprimer(Long id) {
         Commentaire commentaire = trouverParId(id);
@@ -118,7 +106,7 @@ public class CommentaireService {
 
     /**
      * Liste les commentaires pour la modération (dashboard admin)
-     * GET /api/admin/commentaires?statut=EN_ATTENTE&page=0
+
      */
     public Page<CommentaireDTO.Response> listerPourAdmin(
         StatutCommentaire statut,
@@ -142,8 +130,6 @@ public class CommentaireService {
 
     /**
      * Liste les commentaires approuvés d'une publication
-     * GET /api/commentaires/approuves/{publicationId}
-     * Utilisé par le site client pour afficher les commentaires sous un article
      */
     public Page<CommentaireDTO.Response> listerApprouvesPourPublication(
         Long publicationId,
@@ -170,7 +156,6 @@ public class CommentaireService {
 
     /**
      * Récupère l'adresse IP réelle du visiteur
-     * Prend en compte les proxies (X-Forwarded-For)
      */
     private String obtenirAdresseIp(HttpServletRequest request) {
         // X-Forwarded-For = header ajouté par les proxies avec l'IP réelle
