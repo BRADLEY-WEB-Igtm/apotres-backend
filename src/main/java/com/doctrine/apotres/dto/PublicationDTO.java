@@ -13,9 +13,7 @@ import java.time.LocalDateTime;
 
 /**
  * DTOs PUBLICATION — VERSION CLOUDINARY
- *
- * Request inclut maintenant les URLs Cloudinary directement.
- * Le frontend uploade sur Cloudinary puis envoie les URLs ici.
+
  */
 public class PublicationDTO {
 
@@ -42,22 +40,24 @@ public class PublicationDTO {
         private String predicateur;
         private Boolean commentairesActifs;
 
-        /* URLs Cloudinary des fichiers — envoyées par le frontend */
+        /* URLs Cloudinary */
         private String cheminAudio;
-        /* URL complète Cloudinary de l'audio partie 1 */
-        /* Ex: "https://res.cloudinary.com/dqmy8sqmg/video/upload/doctrine-apotres/p1.mp3" */
+ 
 
         private String cheminAudio2;
-        /* URL de l'audio partie 2 (null si pas de partie 2) */
+      
 
         private String cheminAudio3;
-        /* URL de l'audio partie 3 (null si pas de partie 3) */
+
+        private String cheminAudio4;
+
+        private String cheminAudio5;
 
         private String imageUne;
-        /* URL de l'image à la une sur Cloudinary */
+      
 
         private String cheminPdf;
-        /* URL du PDF sur Cloudinary */
+       
     }
 
     @Data
