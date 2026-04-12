@@ -14,15 +14,7 @@ import java.util.List;
 
 /**
  * ============================================================
- * ENTITÉ PUBLICATION — VERSION CORRIGÉE
- *
- * CORRECTION : les audios sont maintenant stockés dans une liste
- * dynamique (table séparée publication_audios) au lieu de 3
- * colonnes fixes. Supporte un nombre illimité de parties audio.
- *
- * Backward compatible : les anciennes colonnes chemin_audio,
- * chemin_audio2, chemin_audio3 sont conservées pour ne pas
- * perdre les publications déjà en base de données.
+ * ENTITÉ PUBLICATION —
  * ============================================================
  */
 @Entity
@@ -63,9 +55,7 @@ public class Publication {
     private StatutPublication statut = StatutPublication.BROUILLON;
 
     // ============================================================
-    // ANCIENS CHAMPS AUDIO — conservés pour backward compatibility
-    // Les publications déjà en BD continuent de fonctionner
-    // Les NOUVELLES publications utilisent cheminsAudio (ci-dessous)
+    // ANCIENS CHAMPS AUDIO —
     // ============================================================
 
     @Column(name = "chemin_audio", length = 500)
@@ -78,33 +68,24 @@ public class Publication {
     private String cheminAudio3;
 
     // ============================================================
-    // NOUVEAU — LISTE DYNAMIQUE D'AUDIOS (nombre illimité)
-    //
-    // @ElementCollection = crée une table séparée "publication_audios"
-    // avec les colonnes : publication_id + chemin + position
-    //
-    // @OrderColumn = conserve l'ordre des parties (Partie 1, 2, 3...)
-    //
-    // Quand Spring voit ddl-auto=update, il crée cette table
-    // automatiquement au prochain démarrage sans toucher les données
+    // NOUVEAU —
     // ============================================================
     @ElementCollection(fetch = FetchType.EAGER)
-    // EAGER = charge les audios en même temps que la publication
-    // (pas de requête supplémentaire — important pour les performances)
+   
 
     @CollectionTable(
         name = "publication_audios",
-        // Nom de la table créée automatiquement en BD
+
         joinColumns = @JoinColumn(name = "publication_id")
-        // Colonne de jointure : publication_id → relie à publications.id
+
     )
     @OrderColumn(name = "position")
-    // position = conserve l'ordre d'insertion (Partie 1 avant Partie 2)
+
 
     @Column(name = "chemin")
-    // Chaque ligne = un chemin audio ex: "uploads/audios/zoom-abc.mp3"
+   
     private List<String> cheminsAudio = new ArrayList<>();
-    // ArrayList = liste vide par défaut (pas null)
+   
 
     // ============================================================
     // AUTRES CHAMPS (inchangés)
