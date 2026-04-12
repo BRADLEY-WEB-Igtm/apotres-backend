@@ -11,9 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * SERVICE FICHIER — version simple (disque local)
- * Sauvegarde les fichiers dans le dossier "uploads/" sur le serveur
- * Compatible Railway — fonctionne sans Cloudinary
+ * SERVICE FICHIER — 
  */
 @Service
 public class FichierService {
