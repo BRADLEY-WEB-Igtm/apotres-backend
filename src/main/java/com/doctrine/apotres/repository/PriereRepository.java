@@ -26,7 +26,6 @@ public interface PriereRepository extends JpaRepository<Priere, Long> {
 
     /**
      * Compte les prières en attente
-     * Utilisé pour le badge "13" dans la sidebar du dashboard
      */
     long countByStatut(StatutPriere statut);
 }
