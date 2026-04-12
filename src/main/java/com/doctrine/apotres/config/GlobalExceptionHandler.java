@@ -12,26 +12,11 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * ============================================================
- * GESTIONNAIRE GLOBAL DES EXCEPTIONS
- *
- * Intercepte toutes les exceptions non gérées dans les
- * controllers et retourne des réponses JSON propres.
- *
- * Sans ce handler, Spring retournerait des pages HTML d\'erreur
- * incompréhensibles côté frontend.
- *
- * @RestControllerAdvice = intercepte les exceptions de tous les controllers
- * ============================================================
- */
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    /**
-     * Entité non trouvée — HTTP 404
-     * Ex: publication.id=999 n\'existe pas en BD
-     */
+ 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleNotFound(EntityNotFoundException e) {
         return ResponseEntity.status(404).body(
@@ -39,9 +24,7 @@ public class GlobalExceptionHandler {
         );
     }
 
-    /**
-     * Identifiants incorrects — HTTP 401
-     */
+   
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<Map<String, String>> handleBadCredentials(BadCredentialsException e) {
         return ResponseEntity.status(401).body(
@@ -50,10 +33,7 @@ public class GlobalExceptionHandler {
         );
     }
 
-    /**
-     * Accès refusé — HTTP 403
-     * Ex: un EDITEUR essaie de supprimer un utilisateur
-     */
+    
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<Map<String, String>> handleAccessDenied(AccessDeniedException e) {
         return ResponseEntity.status(403).body(
@@ -62,11 +42,7 @@ public class GlobalExceptionHandler {
         );
     }
 
-    /**
-     * Validation échouée — HTTP 400
-     * Ex: titre manquant, email invalide
-     * Retourne le détail de chaque champ invalide
-     */
+   
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidation(MethodArgumentNotValidException e) {
         Map<String, String> erreurs = new HashMap<>();
@@ -78,10 +54,7 @@ public class GlobalExceptionHandler {
         );
     }
 
-    /**
-     * Fichier trop grand — HTTP 413
-     * Ex: audio MP3 > 50MB
-     */
+   
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public ResponseEntity<Map<String, String>> handleFileTooLarge(MaxUploadSizeExceededException e) {
         return ResponseEntity.status(413).body(
@@ -90,10 +63,7 @@ public class GlobalExceptionHandler {
         );
     }
 
-    /**
-     * Arguments invalides — HTTP 400
-     * Ex: mauvaise extension de fichier audio
-     */
+  
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Map<String, String>> handleIllegalArgument(IllegalArgumentException e) {
         return ResponseEntity.status(400).body(
@@ -101,13 +71,10 @@ public class GlobalExceptionHandler {
         );
     }
 
-    /**
-     * Erreur serveur générique — HTTP 500
-     * Captures toutes les autres exceptions non prévues
-     */
+   
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleGeneric(Exception e) {
-        /* Ne pas exposer les détails internes en production */
+        
         System.err.println("Erreur non gérée : " + e.getMessage());
         e.printStackTrace();
         return ResponseEntity.status(500).body(
