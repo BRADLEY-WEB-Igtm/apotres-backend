@@ -12,15 +12,6 @@ import java.time.LocalDateTime;
 /**
  * ============================================================
  * ENTITÉ UTILISATEUR
- *
- * Représente un administrateur du dashboard
- * Seuls les utilisateurs enregistrés peuvent :
- * - Se connecter au dashboard (/admin)
- * - Publier du contenu
- * - Modérer les commentaires
- * - Gérer le site
- *
- * Correspond à la page login.html et compte.html du dashboard
  * ============================================================
  */
 @Entity
@@ -37,8 +28,6 @@ public class Utilisateur {
 
     // ============================================================
     // NOM D'UTILISATEUR
-    // unique = true → deux admins ne peuvent pas avoir le même username
-    // Ex: "fridolinbradley", "admin"
     // ============================================================
     @NotBlank(message = "Le nom d'utilisateur est obligatoire")
     @Column(name = "username", nullable = false, unique = true, length = 100)
@@ -46,34 +35,24 @@ public class Utilisateur {
 
     // ============================================================
     // EMAIL
-    // Utilisé pour récupérer le mot de passe ou les notifications
     // ============================================================
     @Email(message = "Format d'email invalide")
     @NotBlank(message = "L'email est obligatoire")
     @Column(name = "email", nullable = false, unique = true, length = 150)
     private String email;
 
-    // ============================================================
-    // MOT DE PASSE HASHÉ
-    // JAMAIS stocké en clair — toujours hashé avec BCrypt
-    // BCrypt ajoute un "sel" aléatoire → même mot de passe = hash différent
-    // ============================================================
     @NotBlank(message = "Le mot de passe est obligatoire")
     @Column(name = "mot_de_passe", nullable = false)
     private String motDePasse;
 
     // ============================================================
     // NOM COMPLET
-    // Ex: "Fridolin Bradley"
     // ============================================================
     @Column(name = "nom_complet", length = 200)
     private String nomComplet;
 
     // ============================================================
     // RÔLE
-    // SUPER_ADMIN = accès total (peut gérer les utilisateurs)
-    // ADMIN = peut publier et modérer
-    // EDITEUR = peut publier mais pas modérer ni supprimer
     // ============================================================
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
@@ -81,18 +60,13 @@ public class Utilisateur {
 
     // ============================================================
     // ACTIF
-    // true = peut se connecter
-    // false = compte désactivé (sans suppression)
     // ============================================================
     @Column(name = "actif")
     private Boolean actif = true;
 
-    // Chemin de la photo de profil (optionnel)
     @Lob
     @Column(name = "photo_profil", columnDefinition = "LONGTEXT")
-    // LONGTEXT = peut stocker jusqu'à 4GB de texte
-    // Nécessaire car une photo en base64 fait 50 000 à 300 000 caractères
-    // length=500 était trop petit et causait une erreur SQL
+
     private String photoProfil;
 
     // Date de création du compte
@@ -103,7 +77,6 @@ public class Utilisateur {
     @Column(name = "derniere_connexion")
     private LocalDateTime derniereConnexion;
 
-    // Exécuté automatiquement avant le INSERT en base
     @PrePersist
     protected void onCreate() {
         this.dateCreation = LocalDateTime.now();
@@ -113,8 +86,8 @@ public class Utilisateur {
     // ÉNUMÉRATION — rôles disponibles
     // ============================================================
     public enum RoleUtilisateur {
-        SUPER_ADMIN, // Accès total
-        ADMIN,       // Accès standard
-        EDITEUR      // Accès limité (publication seulement)
+        SUPER_ADMIN, 
+        ADMIN,       
+        EDITEUR      
     }
 }
