@@ -108,10 +108,7 @@ public class UtilisateurController {
         ));
     }
 
-    /**
-     * Changer son propre mot de passe
-     * PUT /api/admin/utilisateurs/changer-mot-de-passe
-     */
+    
     @PutMapping("/changer-mot-de-passe")
     public ResponseEntity<?> changerMotDePasse(
         @Valid @RequestBody ChangerMotDePasseRequest request
@@ -135,7 +132,7 @@ public class UtilisateurController {
                 .body(Map.of("message", "Le nouveau mot de passe doit être différent de l'ancien"));
         }
 
-        // Hash et sauvegarde
+       
         admin.setMotDePasse(passwordEncoder.encode(request.getNouveauMotDePasse()));
         utilisateurRepository.save(admin);
 
