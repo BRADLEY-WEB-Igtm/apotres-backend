@@ -41,7 +41,7 @@ public class CommentaireDTO {
     }
 
     /**
-     * Données envoyées au dashboard pour la modération
+     * Données envoyées au dashboard 
      */
     @Data
     @NoArgsConstructor
