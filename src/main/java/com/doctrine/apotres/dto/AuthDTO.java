@@ -14,7 +14,7 @@ import com.doctrine.apotres.entity.Utilisateur.RoleUtilisateur;
 public class AuthDTO {
 
     /**
-     * Données de connexion envoyées par l'admin
+     * Données de connexion
      */
     @Data
     @NoArgsConstructor
@@ -36,13 +36,13 @@ public class AuthDTO {
     @AllArgsConstructor
     public static class LoginResponse {
 
-        // Le token JWT — le frontend le stocke dans localStorage
+        // Le token JWT — 
         private String token;
 
-        // Type du token — toujours "Bearer" (standard HTTP)
+        // Type du token — 
         private String type = "Bearer";
 
-        // Infos de l'admin connecté (pour afficher dans le dashboard)
+        // Infos de l'admin connecté
         private Long id;
         private String username;
         private String nomComplet;
