@@ -9,34 +9,28 @@ import com.doctrine.apotres.entity.Utilisateur.RoleUtilisateur;
 /**
  * ============================================================
  * DTO AUTHENTIFICATION
- * Gère la connexion et la réponse avec le token JWT
  * ============================================================
  */
 public class AuthDTO {
 
     /**
      * Données de connexion envoyées par l'admin
-     * Correspond au formulaire login.html du dashboard
      */
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
     public static class LoginRequest {
 
-        // Nom d'utilisateur (ex: "fridolinbradley")
+        // Nom d'utilisateur 
         @NotBlank(message = "Le nom d'utilisateur est obligatoire")
         private String username;
 
-        // Mot de passe en clair (sera comparé au hash BCrypt)
+        
         @NotBlank(message = "Le mot de passe est obligatoire")
         private String motDePasse;
     }
 
-    /**
-     * Réponse envoyée après une connexion réussie
-     * Contient le token JWT que le frontend stocke
-     * et envoie dans chaque requête suivante
-     */
+ 
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
